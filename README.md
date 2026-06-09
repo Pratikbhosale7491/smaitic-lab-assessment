@@ -1,8 +1,8 @@
 # Career Objective
 
-I'm a DevOps Engineer with hands-on experience in AWS, Kubernetes, CI/CD, Terraform and monitoring tools. I enjoy automating deployments, improving system reliability and solving infrastructure related issues. Looking for a DevOps, Platform or SRE role where I can work across the full lifecycle of an application, from deployment and automation to monitoring and production support.
+I'm a DevOps Engineer with  hands-on experience in AWS, Kubernetes (EKS), CI/CD, Terraform and monitoring tools. I enjoy working with Kubernetes at scale, automating deployments, improving system reliability and solving infrastructure related issues. Looking for a DevOps, Platform or SRE role where I can work across the full lifecycle of an application, from deployment and automation to monitoring and production support.
 
-# Microservice Deployment Project
+# Microservice Deployment
 
 This project is a simple Node.js microservice deployment running on AWS EKS. The goal was to build a setup that is easy to deploy, monitor and maintain while following security best practises.
 
@@ -22,13 +22,11 @@ Managing raw Kubernetes manifests becomes difficult as the application grows. He
 
 A few security controls were added to make the deployment safer:
 
-* Container runs as a non-root user
-* Read only root filesystem enabled
-* Linux capabilities dropped
-* Privilege escalation disabled
-* Trivy scans are part of the CI pipeline
-* Secrets are stored in Kubernetes Secrets instead of code
-* Base image version is pinned instead of using latest
+ Container runs as a non-root user
+ Read only root filesystem enabled
+ Trivy scans are part of the CI pipeline
+ Secrets are stored in Kubernetes Secrets instead of code
+ Base image version is pinned instead of using latest
 
 ## Monitoring and Logging
 
@@ -38,15 +36,11 @@ Logs are written in JSON format using Pino and collected by Fluent Bit. From the
 
 ## Application Endpoints
 
-* `/` - Basic application status
-* `/healthz` - Liveness check
-* `/readyz` - Readiness check
-* `/metrics` - Prometheus metrics
-
-The application also handles SIGTERM signals for graceful shutdown, helping avoid dropped requests during deployments.
+ `/` - Basic application status
+ `/healthz` - Liveness check
+ `/readyz` - Readiness check
+`/metrics` - Prometheus metrics
 
 ## Tech Stack
 
-AWS EKS, Kubernetes, Docker, Jenkins, Helm, Terraform, Prometheus, Grafana, Fluent Bit, Elasticsearch and Kibana.
-
-Overall, this project was built to demonstrate a real world deployment workflow with automation, monitoring, logging and security best practises. There are still a few areas that could be improved further, but it provides a good production ready foundation.
+AWS EKS, Kubernetes, Docker, Jenkins, Helm, Prometheus, Grafana, Fluent Bit, Elasticsearch and Kibana.
