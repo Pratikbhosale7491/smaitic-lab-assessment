@@ -34,7 +34,6 @@ spec:
           securityContext:
             {{- toYaml .Values.securityContext | nindent 12 }}
           ports:
-            # Port MUST be named "api-web" per project contract.
             - name: api-web
               containerPort: {{ .Values.containerPort }}
               protocol: TCP
@@ -57,7 +56,7 @@ spec:
           resources:
             {{- toYaml .Values.resources | nindent 12 }}
           volumeMounts:
-            # /tmp required by Node.js internals when readOnlyRootFilesystem is true.
+            
             - name: tmp-dir
               mountPath: /tmp
       volumes:

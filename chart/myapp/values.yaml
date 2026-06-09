@@ -1,18 +1,14 @@
-# Default values for myapp.
-
 replicaCount: 2
 
 image:
   repository: 123456789012.dkr.ecr.us-east-1.amazonaws.com/myapp
   pullPolicy: IfNotPresent
-  # Overridden by CI: image.tag = <git-short-sha>-<build-number>
   tag: ""
 
 imagePullSecrets: []
 nameOverride: ""
 fullnameOverride: ""
 
-# Port the container listens on; named "api-web" in the Deployment and Service.
 containerPort: 3000
 
 serviceAccount:
@@ -20,7 +16,6 @@ serviceAccount:
   annotations: {}
   name: ""
 
-# Prometheus scrape fallback annotations (ServiceMonitor is the primary path)
 podAnnotations:
   prometheus.io/scrape: "true"
   prometheus.io/port: "3000"
@@ -47,7 +42,6 @@ service:
 ingress:
   enabled: false
   host: myapp.example.com
-  # ALB annotations are pre-populated; override or extend below.
   annotations: {}
 
 resources:

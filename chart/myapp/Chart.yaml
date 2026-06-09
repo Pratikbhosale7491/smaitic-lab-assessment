@@ -1,6 +1,6 @@
 apiVersion: v2
 name: myapp
-description: Production-ready stateless Node.js microservice
+description: stateless Node.js microservice
 type: application
 version: 0.1.0
 appVersion: "1.0.0"
@@ -8,6 +8,4 @@ keywords:
   - nodejs
   - microservice
   - express
-home: ""
-maintainers:
-  - name: platform-team
+

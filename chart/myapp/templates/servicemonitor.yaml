@@ -1,12 +1,10 @@
 {{- if .Values.serviceMonitor.enabled -}}
-# Requires Prometheus Operator / kube-prometheus-stack installed in the cluster.
 apiVersion: monitoring.coreos.com/v1
 kind: ServiceMonitor
 metadata:
   name: {{ include "myapp.fullname" . }}
   labels:
     {{- include "myapp.labels" . | nindent 4 }}
-    # Label must match the Prometheus Operator's serviceMonitorSelector.
     release: prometheus
 spec:
   selector:

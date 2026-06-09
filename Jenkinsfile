@@ -15,7 +15,7 @@ pipeline {
         booleanParam(
             name: 'DEPLOY',
             defaultValue: false,
-            description: 'Set to true to deploy to the cluster; false runs --dry-run only.'
+            description: 'Deploy to cluster (false = dry-run only)'
         )
     }
 
@@ -51,7 +51,6 @@ pipeline {
         stage('Build Docker Image') {
             steps {
                 sh "docker build -t ${env.FULL_IMAGE} ."
-                // Tag with short SHA as a stable pointer without build number
                 sh "docker tag ${env.FULL_IMAGE} ${env.ECR_REGISTRY}/${env.IMAGE_NAME}:${env.GIT_SHORT_SHA}"
             }
         }
@@ -87,14 +86,13 @@ pipeline {
             }
         }
 
-        stage('Helm Lint & Template Validate') {
+        stage('Helm Validate') {
             steps {
                 sh "helm lint ${env.HELM_CHART_DIR}"
                 sh """
                     helm template ${env.HELM_RELEASE} ${env.HELM_CHART_DIR} \
                       --set image.repository=${env.ECR_REGISTRY}/${env.IMAGE_NAME} \
-                      --set image.tag=${env.IMAGE_TAG} \
-                      --debug
+                      --set image.tag=${env.IMAGE_TAG}
                 """
             }
         }
@@ -132,14 +130,13 @@ pipeline {
 
     post {
         always {
-            echo "Pipeline ${env.BUILD_NUMBER} finished. Pruning dangling images."
             sh 'docker image prune -f || true'
         }
         success {
-            echo "SUCCESS: ${env.FULL_IMAGE} built and ${params.DEPLOY ? 'deployed' : 'dry-run validated'}."
+            echo "Built and ${params.DEPLOY ? 'deployed' : 'dry-run validated'}: ${env.FULL_IMAGE}"
         }
         failure {
-            echo "FAILURE: Build ${env.BUILD_NUMBER} (${env.GIT_SHORT_SHA}) failed — check logs above."
+            echo "Build ${env.BUILD_NUMBER} failed."
         }
     }
 }

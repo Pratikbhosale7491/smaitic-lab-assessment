@@ -6,10 +6,7 @@ metadata:
   labels:
     {{- include "myapp.labels" . | nindent 4 }}
   annotations:
-    # ── AWS ALB Ingress Controller (default) ────────────────────────────────
-    # For nginx instead: replace all alb.* annotations with:
-    #   nginx.ingress.kubernetes.io/rewrite-target: /
-    #   kubernetes.io/ingress.class: nginx
+    # AWS ALB Ingress Controller
     kubernetes.io/ingress.class: alb
     alb.ingress.kubernetes.io/scheme: internet-facing
     alb.ingress.kubernetes.io/target-type: ip
