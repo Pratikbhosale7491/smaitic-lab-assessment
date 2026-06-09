@@ -1,0 +1,70 @@
+# Default values for myapp.
+
+replicaCount: 2
+
+image:
+  repository: 123456789012.dkr.ecr.us-east-1.amazonaws.com/myapp
+  pullPolicy: IfNotPresent
+  # Overridden by CI: image.tag = <git-short-sha>-<build-number>
+  tag: ""
+
+imagePullSecrets: []
+nameOverride: ""
+fullnameOverride: ""
+
+# Port the container listens on; named "api-web" in the Deployment and Service.
+containerPort: 3000
+
+serviceAccount:
+  create: true
+  annotations: {}
+  name: ""
+
+# Prometheus scrape fallback annotations (ServiceMonitor is the primary path)
+podAnnotations:
+  prometheus.io/scrape: "true"
+  prometheus.io/port: "3000"
+  prometheus.io/path: "/metrics"
+
+podSecurityContext:
+  runAsNonRoot: true
+  runAsUser: 1001
+  fsGroup: 1001
+  seccompProfile:
+    type: RuntimeDefault
+
+securityContext:
+  allowPrivilegeEscalation: false
+  readOnlyRootFilesystem: true
+  capabilities:
+    drop:
+      - ALL
+
+service:
+  type: ClusterIP
+  port: 80
+
+ingress:
+  enabled: false
+  host: myapp.example.com
+  # ALB annotations are pre-populated; override or extend below.
+  annotations: {}
+
+resources:
+  limits:
+    cpu: 500m
+    memory: 256Mi
+  requests:
+    cpu: 100m
+    memory: 128Mi
+
+autoscaling:
+  enabled: false
+  minReplicas: 2
+  maxReplicas: 10
+  targetCPUUtilizationPercentage: 80
+
+serviceMonitor:
+  enabled: false
+  interval: 30s
+  path: /metrics

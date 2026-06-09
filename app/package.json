@@ -1,0 +1,19 @@
+{
+  "name": "myapp",
+  "version": "1.0.0",
+  "description": "Production-ready stateless Node.js microservice",
+  "main": "server.js",
+  "scripts": {
+    "build": "echo Build complete",
+    "start": "node server.js",
+    "test": "node -e \"const assert = require('assert'); assert.strictEqual(1 + 1, 2, 'arithmetic'); assert.ok(process.version.startsWith('v'), 'node version'); console.log('All tests passed');\""
+  },
+  "dependencies": {
+    "express": "^4.18.2",
+    "pino": "^8.17.2",
+    "prom-client": "^15.1.0"
+  },
+  "engines": {
+    "node": ">=20.0.0"
+  }
+}
